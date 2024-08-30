@@ -11,7 +11,6 @@
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
-    "amazon-cognito-identity-js": "^5.2.8",
     "antd": "^4.21.0",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
@@ -79,20 +78,9 @@
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "node scripts/start.js",
-    "cdk-build": "node scripts/build.js",
     "build:dev": "node scripts/dev.js",
     "test": "node scripts/test.js",
-    "build:sandbox": "node scripts/sandbox.js",
-    "cdk-build-dev": "npm run build:dev && tsc --target ES2018 --moduleResolution node --module commonjs infrastructure/index.ts",
-    "cdk-build-sandbox": "npm run build:sandbox && tsc --target ES2018 --moduleResolution node --module commonjs infrastructure/index.ts",
-    "cdk-synth-all": "npm run cdk-build && cdk synth --all",
-    "cdk-deploy-dev": "npm run cdk-build-dev && cdk deploy -c 'env=Dev' --all --progress events",
-    "cdk-deploy-sandbox": "npm run cdk-build-sandbox && cdk deploy -c 'env=Sandbox' --all --progress events",
-    "cdk-deploy-prod": "npm run cdk-build && cdk deploy -c 'env=Prod' --all --progress events",
-    "cdk-destroy-dev": "cdk destroy -c 'env=Dev' --all --progress events -f",
-    "cdk-destroy-sandbox": "cdk destroy -c 'env=Sandbox' --all --progress events -f",
-    "cdk-diagram-html": "cdk synth -c 'env=DEV' --all && npx cdk-dia --rendering cytoscape-html",
-    "cdk-diagram": "cdk synth -c 'env=DEV' --all && npx cdk-dia"
+    "build": "node scripts/build.js"
   },
   "eslintConfig": {
     "extends": [

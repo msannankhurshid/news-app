@@ -28,8 +28,6 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 
-const environments = require('../build-environments');
-
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
@@ -345,18 +343,6 @@ module.exports = function (webpackEnv) {
           exclude: /@babel(?:\/|\\{1,2})runtime/,
           test: /\.(js|mjs|jsx|ts|tsx|css)$/,
           loader: require.resolve('source-map-loader'),
-        },
-        {
-          test: /cognito\.js$/,
-          loader: require.resolve('string-replace-loader'),
-          options: {
-            search: 'REACT_APP_USERPOOL_ID',
-            replace: 'window.jQuery',
-            multiple: [
-              { search: 'REACT_APP_USERPOOL_ID', replace: environments[webpackEnv].REACT_APP_USERPOOL_ID },
-              { search: 'REACT_APP_CLIENT_ID', replace: environments[webpackEnv].REACT_APP_CLIENT_ID }
-           ]
-          }
         },
         {
           // "oneOf" will traverse all following loaders until one will
