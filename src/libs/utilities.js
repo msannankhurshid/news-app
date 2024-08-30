@@ -1,9 +1,19 @@
-// import moment from "moment";
+const getPastDateText = (selectedDate) => {
+  let dateText = "";
 
-const formatDate = (date) => {
-    return moment(date).format('DD-MM-YYYY hh:mm a');
+  if (selectedDate === "pastHour") {
+    dateText = "hour";
+  } else if (selectedDate === "past24Hour") {
+    dateText = "day";
+  }
+  if (selectedDate === "pastWeek") {
+    dateText = "week";
+  }
+  if (selectedDate === "pastMonth") {
+    dateText = "month";
+  }
+
+  return dateText;
 };
 
-export {
-    formatDate,
-};
+export { getPastDateText };
