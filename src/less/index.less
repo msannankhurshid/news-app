@@ -1,0 +1,117 @@
+@import '~antd/lib/style/themes/default.less';
+@import '~antd/dist/antd.less';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@layout-body-background: #0F0865;
+@layout-sider-background: #000;
+@menu-dark-bg: #000;
+@menu-dark-item-active-bg: #1E1E1E;
+@dark-grey: #919191;
+@brand-color: #177DDC;
+@container-bg: #141414;
+@cyan: #0F0865;
+@gray-3: #434343;
+@gray-7: #8C8C8C;
+
+@dark-theme-text-color: #DCDCDC;
+@text-color-placeholder: #7D7D7D;
+
+// overrides
+// @primary-color: @brand-color;
+@font-family: "Poppins", normal;
+@primary-color: @brand-color;
+// @heading-color: @white;
+@divider-color: #303030;
+// @font-size-base: 16px;
+@card-background: transparent;
+@card-radius: 12px;
+@border: #e1e1e1;
+
+
+
+//Form
+@label-color: @text-color;
+@input-border-color: #434343;
+@input-bg: transparent;
+@input-placeholder-color: @text-color-placeholder;
+@form-item-margin-bottom: 16px;
+
+
+
+// imports 
+@import './colors.less';
+@import './typography.less';
+@import './_utilities.less';
+
+* {
+    scrollbar-color: lightGray black;
+}
+
+body {
+    height: 100%;
+    background: rgba(128,134,139,.2);
+    color: #000;
+}
+
+// Header
+.header-container {
+    background-image: url('../Assets/icons/header-background.svg');
+    margin-bottom: 20px;
+}
+
+.header-sub-container {
+    width: 1098px;
+    display: flex;
+    margin: 25px auto;
+}
+
+.header-sub-container>div {
+    margin-right: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-sub-container img {
+    width: 80px;
+}
+
+.header-title {
+    font-family: Manrope;
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 44px;
+    text-align: center;
+    color: #0091EA;
+    text-transform: uppercase;
+    width: 100%;
+    height: 26px;
+}
+
+// Main Content
+.main-content-container {
+    max-width: 1240px;
+    width: 100%;
+    margin: 0 auto 50px;
+}
+
+
+
+// ::placeholder {
+//     color: #0091EA;
+//     opacity: 0.4;
+//     /* Firefox */
+// }
+
+// ::-ms-input-placeholder {
+//     /* Edge 12-18 */
+//     color: #0091EA;
+// }
+
+.news-container {
+    border: 1px solid #000;
+    margin-top: 20px;
+    border-radius: 5px;
+    background: #fff;
+}

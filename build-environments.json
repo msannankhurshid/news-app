@@ -1,0 +1,15 @@
+{
+    "production": {
+        "REACT_APP_USERPOOL_ID": "us-east-1_NjSarF0O4",
+        "REACT_APP_CLIENT_ID": "650746158kvhqi8iin4ff73lrk"
+    },
+    "development": {
+        "REACT_APP_USERPOOL_ID": "us-east-1_p0KW5dFQh",
+        "REACT_APP_CLIENT_ID": "3t1ntkdquj5b3se08q3ibkkti4"
+    },
+    "sandbox": {
+        "REACT_APP_USERPOOL_ID": "us-east-1_p0KW5dFQh",
+        "REACT_APP_CLIENT_ID": "3t1ntkdquj5b3se08q3ibkkti4"
+    }
+
+}

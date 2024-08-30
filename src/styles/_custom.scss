@@ -1,0 +1,74 @@
+// Required
+@import "../../node_modules/bootstrap/scss/functions";
+
+// Default variable overrides
+$font-family-sans-serif: "Poppins", normal;
+$white: #ffffff;
+$body-bg: #0f0f0f;
+$body-color: $white;
+$form-bg: #1e1e1e;
+$brand-blue: #045ddd;
+
+$gray-100: #e1e1e1;
+$dark-grey: #919191;
+$text-muted: $dark-grey;
+
+$input-bg: $form-bg;
+$input-border-color: $gray-100;
+$input-focus-border-color: $white;
+$input-btn-focus-color: rgb(225, 225, 225, 25%);
+$input-disabled-bg: $form-bg;
+$form-select-indicator-color: $white;
+$form-check-input-checked-bg-color: $brand-blue;
+$form-check-input-checked-bg-color: $brand-blue;
+$form-select-line-height: 2;
+
+$btn-border-radius: 102px;
+$btn-border-radius-lg: 102px;
+$btn-border-radius-sm: 102px;
+$btn-line-height: 3.6875rem;
+$btn-close-color: $body-color;
+$btn-font-weight: 700;
+$link-color: $brand-blue;
+
+$dropdown-bg: $body-bg;
+$dropdown-link-color: $white;
+$dropdown-link-hover-color: $body-bg;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+  xxxl: 1600px,
+  xxxxl: 1850px,
+);
+
+// @import "../../node_modules/bootstrap/scss/variables";
+
+// Required
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
+@import "../../node_modules/bootstrap/scss/utilities";
+
+// Optional Bootstrap components here
+@import "../../node_modules/bootstrap/scss/root";
+@import "../../node_modules/bootstrap/scss/reboot";
+@import "../../node_modules/bootstrap/scss/type";
+@import "../../node_modules/bootstrap/scss/containers";
+@import "../../node_modules/bootstrap/scss/grid";
+@import "../../node_modules/bootstrap/scss/forms";
+@import "../../node_modules/bootstrap/scss/buttons";
+@import "../../node_modules/bootstrap/scss/modal";
+@import "../../node_modules/bootstrap/scss/close";
+@import "../../node_modules/bootstrap/scss/spinners";
+@import "../../node_modules/bootstrap/scss/dropdown";
+
+// Helpers
+@import "../../node_modules/bootstrap/scss/helpers";
+
+// Utilities
+@import "../../node_modules/bootstrap/scss/utilities/api";
+// scss-docs-end import-stack
