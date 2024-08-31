@@ -14,43 +14,46 @@ const onTabChange = (key) => {
 const tabItems = [
   {
     key: "1",
-    label: "Source 1",
+    label: "News API",
     children: <SearchNewsSource1 />,
   },
   {
     key: "2",
-    label: "Source 2",
+    label: "New York Times",
     children: <SearchNewsSource2 />,
   },
   {
     key: "3",
-    label: "Source 3",
+    label: "The Guardian",
     children: <SearchNewsSource3 />,
   },
 ];
 
 export const MainContent = () => {
   const apiKey = useSelector((state) => state.newsData.apiKey1);
+  const sourceOptions = useSelector((state) => state.search.sourceOptions);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`https://newsapi.org/v2/top-headlines/sources?apiKey=${apiKey}`)
-      .then((response) => response.json())
-      .then(async (response) => {
-        if (response.status === "ok") {
-          let sources = response.sources.map((s) => ({
-            value: s.id,
-            label: s.name,
-          }));
-          sources = [{ value: "all", label: "All" }, ...sources];
-          dispatch(setSourceOptions(sources));
-        } else {
-          dispatch(setSourceOptions([]));
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error.message);
-      });
+    if (!sourceOptions.length) {
+      fetch(`https://newsapi.org/v2/top-headlines/sources?apiKey=${apiKey}`)
+        .then((response) => response.json())
+        .then(async (response) => {
+          if (response.status === "ok") {
+            let sources = response.sources.map((s) => ({
+              value: s.id,
+              label: s.name,
+            }));
+            sources = [{ value: "all", label: "All" }, ...sources];
+            dispatch(setSourceOptions(sources));
+          } else {
+            dispatch(setSourceOptions([]));
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error.message);
+        });
+    }
   }, []);
 
   return (
@@ -60,7 +63,7 @@ export const MainContent = () => {
 
         <Tabs
           tabBarGutter={50}
-          tabBarStyle={{ margin: '20px 0', background: '#fff' }}
+          tabBarStyle={{ margin: "20px 0", background: "#fff" }}
           defaultActiveKey="1"
           size="large"
           centered

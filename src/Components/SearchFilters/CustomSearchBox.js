@@ -47,6 +47,7 @@ export const CustomSearchBox = () => {
             onChange={(e) => dispatch(setSelectedSource(e))}
             options={sourceOptions}
           />
+          <span style={{ marginLeft: '20px' }}>(Preferred)</span>
         </div>
 
         <div className="custom-search-box-fields">

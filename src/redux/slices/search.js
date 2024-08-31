@@ -5,7 +5,7 @@ const initialState = {
   searchTrigger1: true,
   searchTrigger2: true,
   searchTrigger3: true,
-  searchValue: "Top News",
+  searchValue: "",
   toggleSearchBox: false,
   selectedSource: "all",
   sourceOptions: [],

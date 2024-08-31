@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  apiKey1: "f45fa21b4ef44306a06ea49c35184326",
-  apiKey2: "wQ8UOc86QzUDbZMO1GuuUDUAmGU2XK3v",
-  apiKey3: "f45fa21b4ef44306a06ea49c35184326",
+  apiKey1: "f45fa21b4ef44306a06ea49c35184326", // News API Org
+  apiKey2: "wQ8UOc86QzUDbZMO1GuuUDUAmGU2XK3v", // New York Times
+  apiKey3: "5512c201-da6b-4790-aad3-7d132ea8a92c", // The Guardian
   loadingSource1: false,
   loadingSource2: false,
   loadingSource3: false,

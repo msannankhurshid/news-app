@@ -16,4 +16,7 @@ const getPastDateText = (selectedDate) => {
   return dateText;
 };
 
-export { getPastDateText };
+const isCategoryAllowed = (selectedCategory, selectedSource) =>
+  selectedCategory !== "all" && selectedSource === "all";
+
+export { getPastDateText, isCategoryAllowed };

@@ -8,8 +8,8 @@ import { List } from "antd";
 import defaultImage from "../../Assets/icons/placeholder-image.webp";
 import { setSearchTrigger3 } from "../../redux/slices/search";
 import moment from "moment";
-import { DATE_FORMAT } from "../../constants";
-import { getPastDateText } from "../../libs/utilities";
+import { DISPLAY_DATE_FORMAT } from "../../constants";
+import { getPastDateText, isCategoryAllowed } from "../../libs/utilities";
 
 export const SearchNewsSource3 = () => {
   const [pageSize, setPageSize] = useState(3);
@@ -31,28 +31,45 @@ export const SearchNewsSource3 = () => {
     dispatch(setLoadingSource3(true));
     dispatch(setNewsDataSource3([]));
 
-    let parameters = `q=${searchValue}&apiKey=${apiKey}`;
+    let parameters = `api-key=${apiKey}&page-size=50&show-fields=all`;
 
+    if (searchValue) {
+      parameters += `&q=${searchValue}`;
+    } else if (
+      !searchValue &&
+      selectedSource === "all" &&
+      selectedCategory === "all"
+    ) {
+      // parameters += "&q=news";
+    }
     if (selectedSource !== "all") {
-      parameters += `&sources=${selectedSource}`;
+      parameters += `&publication=${selectedSource}`;
     }
-    if (selectedCategory !== "all") {
-      // parameters += `&category=${selectedCategory}`;
-    }
-    if (selectedDate !== "anytime") {
-      const nowDate = moment().format(DATE_FORMAT);
-      const beforeDate = moment(Date.now())
-        .subtract(1, getPastDateText(selectedDate))
-        .format(DATE_FORMAT);
-
-      parameters += `&from=${beforeDate}&to=${nowDate}`;
+    if (isCategoryAllowed(selectedCategory, selectedSource)) {
+      parameters += `&pillarName=${selectedCategory}`;
     }
 
-    fetch(`https://newsapi.org/v2/everything?${parameters}`)
+    const baseUrl = "https://content.guardianapis.com/search";
+    const url = `${baseUrl}?${parameters}`;
+
+    fetch(url)
       .then((response) => response.json())
       .then(async (response) => {
-        if (response.status === "ok") {
-          dispatch(setNewsDataSource3(response.articles));
+        if (response.response.status === "ok") {
+          let articles = response.response.results;
+
+          if (selectedDate !== "anytime") {
+            const nowDate = moment();
+            const beforeDate = moment(Date.now()).subtract(
+              1,
+              getPastDateText(selectedDate)
+            );
+
+            articles = articles.filter((art) =>
+              moment(art.webPublicationDate).isBetween(beforeDate, nowDate)
+            );
+          }
+          dispatch(setNewsDataSource3(articles));
         } else {
           dispatch(setNewsDataSource3([]));
         }
@@ -78,7 +95,7 @@ export const SearchNewsSource3 = () => {
           className="news-container"
           header={
             <div className="header-title">
-              {searchValue !== "Top News" ? "Search Results" : "Top News"}
+              {searchValue !== "" ? "Search Results" : "Top News"}
             </div>
           }
           itemLayout="vertical"
@@ -92,25 +109,32 @@ export const SearchNewsSource3 = () => {
           }}
           dataSource={newsDataSource3}
           renderItem={(item) => (
-            <List.Item
-              key={item.title}
-              extra={
-                <img
-                  width={272}
-                  alt="news-img"
-                  src={item.urlToImage || defaultImage}
-                />
-              }
-            >
+            <List.Item key={item.webTitle}
+            extra={
+              <img
+                width={272}
+                alt="news-img"
+                src={item.fields.thumbnail || defaultImage}
+              />
+            }>
               <List.Item.Meta
                 title={
-                  <a href={item.url} target="_blank" rel="noreferrer">
-                    {item.title}
+                  <a href={item.webUrl} target="_blank" rel="noreferrer">
+                    {item.webTitle}
                   </a>
                 }
-                description={item.description}
+                description={
+                  <>
+                    <div>{item.fields.byline || item.fields.publication}</div>
+                    <div>
+                      {moment(item.webPublicationDate).format(
+                        DISPLAY_DATE_FORMAT
+                      )}
+                    </div>
+                  </>
+                }
               />
-              {item.content}
+              <div className="limit-text" title={item.fields.bodyText}>{item.fields.bodyText}</div>
             </List.Item>
           )}
         />

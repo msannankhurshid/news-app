@@ -8,7 +8,7 @@ import { List } from "antd";
 import defaultImage from "../../Assets/icons/placeholder-image.webp";
 import { setSearchTrigger2 } from "../../redux/slices/search";
 import moment from "moment";
-import { DATE_FORMAT, DISPLAY_DATE_FORMAT } from "../../constants";
+import { DISPLAY_DATE_FORMAT } from "../../constants";
 import { getPastDateText } from "../../libs/utilities";
 
 export const SearchNewsSource2 = () => {
@@ -35,17 +35,16 @@ export const SearchNewsSource2 = () => {
 
     if (selectedSource !== "all") {
       parameters += `&facet=true&facet_fields=source&facet_filter=true&fq=${selectedSource}`;
-    }
-    if (selectedCategory !== "all") {
-      // parameters += `&category=${selectedCategory}`;
+    } else if (selectedCategory !== "all") {
+      parameters += `&facet=true&facet_fields=news_desk&facet_filter=true&fq=${selectedCategory}`;
     }
     if (selectedDate !== "anytime") {
-      const nowDate = moment().format(DATE_FORMAT);
+      const nowDate = moment().format('YYYYMMDD');
       const beforeDate = moment(Date.now())
         .subtract(1, getPastDateText(selectedDate))
-        .format(DATE_FORMAT);
+        .format('YYYYMMDD');
 
-      parameters += `&from=${beforeDate}&to=${nowDate}`;
+      parameters += `&begin_date=${beforeDate}&end_date=${nowDate}`;
     }
 
     fetch(
@@ -80,7 +79,7 @@ export const SearchNewsSource2 = () => {
           className="news-container"
           header={
             <div className="header-title">
-              {searchValue !== "Top News" ? "Search Results" : "Top News"}
+              {searchValue !== "" ? "Search Results" : "Top News"}
             </div>
           }
           itemLayout="vertical"

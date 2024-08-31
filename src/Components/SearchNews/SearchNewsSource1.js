@@ -8,8 +8,8 @@ import { List } from "antd";
 import defaultImage from "../../Assets/icons/placeholder-image.webp";
 import { setSearchTrigger1 } from "../../redux/slices/search";
 import moment from "moment";
-import { DATE_FORMAT, DISPLAY_DATE_FORMAT } from "../../constants";
-import { getPastDateText } from "../../libs/utilities";
+import { DISPLAY_DATE_FORMAT } from "../../constants";
+import { getPastDateText, isCategoryAllowed } from "../../libs/utilities";
 
 export const SearchNewsSource1 = () => {
   const [pageSize, setPageSize] = useState(3);
@@ -31,28 +31,49 @@ export const SearchNewsSource1 = () => {
     dispatch(setLoadingSource1(true));
     dispatch(setNewsDataSource1([]));
 
-    let parameters = `q=${searchValue}&apiKey=${apiKey}`;
+    let parameters = `apiKey=${apiKey}&pageSize=100`;
 
+    if (searchValue) {
+      parameters += `&q=${searchValue}`;
+    } else if (
+      !searchValue &&
+      selectedSource === "all" &&
+      selectedCategory === "all"
+    ) {
+      parameters += "&q=news";
+    }
     if (selectedSource !== "all") {
       parameters += `&sources=${selectedSource}`;
     }
-    if (selectedCategory !== "all") {
-      // parameters += `&category=${selectedCategory}`;
-    }
-    if (selectedDate !== "anytime") {
-      const nowDate = moment().format(DATE_FORMAT);
-      const beforeDate = moment(Date.now())
-        .subtract(1, getPastDateText(selectedDate))
-        .format(DATE_FORMAT);
-
-      parameters += `&from=${beforeDate}&to=${nowDate}`;
+    if (isCategoryAllowed(selectedCategory, selectedSource)) {
+      parameters += `&category=${selectedCategory}`;
     }
 
-    fetch(`https://newsapi.org/v2/everything?${parameters}`)
+    const baseUrl = "https://newsapi.org/v2/";
+    const url = `${baseUrl}${
+      isCategoryAllowed(selectedCategory, selectedSource)
+        ? "top-headlines"
+        : "everything"
+    }?${parameters}`;
+
+    fetch(url)
       .then((response) => response.json())
       .then(async (response) => {
         if (response.status === "ok") {
-          dispatch(setNewsDataSource1(response.articles));
+          let articles = response.articles;
+
+          if (selectedDate !== "anytime") {
+            const nowDate = moment();
+            const beforeDate = moment(Date.now()).subtract(
+              1,
+              getPastDateText(selectedDate)
+            );
+
+            articles = articles.filter((art) =>
+              moment(art.publishedAt).isBetween(beforeDate, nowDate)
+            );
+          }
+          dispatch(setNewsDataSource1(articles));
         } else {
           dispatch(setNewsDataSource1([]));
         }
@@ -78,7 +99,7 @@ export const SearchNewsSource1 = () => {
           className="news-container"
           header={
             <div className="header-title">
-              {searchValue !== "Top News" ? "Search Results" : "Top News"}
+              {searchValue !== "" ? "Search Results" : "Top News"}
             </div>
           }
           itemLayout="vertical"
