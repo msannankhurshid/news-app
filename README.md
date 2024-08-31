@@ -1,5 +1,8 @@
 ## Available Scripts
 
+Node Version: 18.17.1
+NPM Version: 9.6.7
+
 In the project directory, you can run:
 
 ### `npm install`
